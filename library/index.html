@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Library Project</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Library</h1>
+    <hr>
+    <div id='addBook' hidden>
+      <form name="addBookForm">
+        <h2>Add new book</h2>
+        <div>
+          <input type='text' id='title' placeholder="Title">
+          <input type="text" id='author' placeholder="Author">
+          <input type='number' id='pages' placeholder="Pages" min='0'>
+          <input type='checkbox' id='read' name='read' value='read'>
+          <label for='read'>Read</label>
+        </div>
+        <div>
+          <input type='button' id='submit' value='Add Book' onclick='addBookToLibrary()'>
+        </div>
+      </form>
+    </div>
+    <div id='bookList'>
+      <input type='button' value='Add New Book' onclick='toggleHidden()'>
+      <h2>Book List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Read</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id='bookListTable'>
+
+        </tbody>
+      </table>
+    </div>
+    <script src="book.js" async defer></script>
+  </body>
+</html>
