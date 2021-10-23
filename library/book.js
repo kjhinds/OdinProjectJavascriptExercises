@@ -13,6 +13,9 @@ function Book(title, author, pages, read) {
   this.info = function() {
     return `${title} by ${author}, ${pages} pages, ${read}`;
   }
+  this.toggleRead = function() {
+    this.read = (this.read == 'read') ? 'not read' : 'read';
+  }
 }
 
 function addBookToLibrary() {
@@ -32,25 +35,39 @@ function updateTable() {
   table.textContent = '';
   myLibrary.forEach((book, index) => {
     let row = table.insertRow();
-    let title = row.insertCell();
-    title.innerHTML = book.title;
-    let author = row.insertCell();
-    author.innerHTML = book.author;
-    let pages = row.insertCell();
-    pages.innerHTML = book.pages;
-    let read = row.insertCell();
-    read.innerHTML = book.read;
-    let deleteCell = document.createElement('td');
-    let deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', () => {
-      myLibrary.splice(index, 1);
-      updateTable();
+    Object.keys(book).forEach(property => {
+      let newCell = document.createElement('td');
+      newCell.textContent = book[property];
+      row.appendChild(newCell);
     });
-    deleteCell.appendChild(deleteButton);
-    row.appendChild(deleteCell);
+    row.appendChild(newToggleButton(book));
+    row.appendChild(newDeleteButton(index));
   });
   addStorage();
+}
+
+function newDeleteButton(index) {
+  let deleteCell = document.createElement('td');
+  let deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.addEventListener('click', () => {
+    myLibrary.splice(index, 1);
+    updateTable();
+  });
+  deleteCell.appendChild(deleteButton);
+  return deleteCell;
+}
+
+function newToggleButton(book) {
+  let toggleCell = document.createElement('td');
+  let toggleButton = document.createElement('button');
+  toggleButton.textContent = 'Toggle Read Status';
+  toggleButton.addEventListener('click', () => {
+    book.read = (book.read == 'read') ? 'not read' : 'read';
+    updateTable()
+  });
+  toggleCell.appendChild(toggleButton);
+  return toggleCell;
 }
 
 function clearForm() {
