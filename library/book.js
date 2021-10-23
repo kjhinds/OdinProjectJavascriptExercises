@@ -10,12 +10,6 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read ? 'read' : 'not read';
-  this.info = function() {
-    return `${title} by ${author}, ${pages} pages, ${read}`;
-  }
-  this.toggleRead = function() {
-    this.read = (this.read == 'read') ? 'not read' : 'read';
-  }
 }
 
 function addBookToLibrary() {
@@ -23,11 +17,27 @@ function addBookToLibrary() {
                           $authorInput.value, 
                           $pagesInput.value, 
                           $readInput.checked);
-  console.log(newBook);
-  myLibrary.push(newBook);
-  updateTable();
-  toggleHidden();
-  clearForm();
+  let valid = validateBook(newBook);
+  if (valid) {
+    myLibrary.push(newBook);
+    updateTable();
+    clearForm();
+    toggleHidden();
+  }
+}
+
+function validateBook(book) {
+  let errorList = [];
+  Object.keys(book).forEach(property => {
+    if (book[property] == "") {
+      errorList.push(property);
+    }
+  });
+  if (errorList.length > 0) {
+    alert(`Missing: ${errorList}`);
+    return false;
+  }
+  return true;
 }
 
 function updateTable() {
