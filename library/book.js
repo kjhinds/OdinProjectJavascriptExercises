@@ -61,7 +61,7 @@ function newDeleteButton(index) {
 function newToggleButton(book) {
   let toggleCell = document.createElement('td');
   let toggleButton = document.createElement('button');
-  toggleButton.textContent = 'Toggle Read Status';
+  toggleButton.textContent = 'Toggle Read';
   toggleButton.addEventListener('click', () => {
     book.read = (book.read == 'read') ? 'not read' : 'read';
     updateTable()
