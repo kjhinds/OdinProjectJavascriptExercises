@@ -30,7 +30,7 @@ function addBookToLibrary() {
 function updateTable() {
   let table = document.getElementById('bookListTable');
   table.textContent = '';
-  myLibrary.forEach(book => {
+  myLibrary.forEach((book, index) => {
     let row = table.insertRow();
     let title = row.insertCell();
     title.innerHTML = book.title;
@@ -40,6 +40,15 @@ function updateTable() {
     pages.innerHTML = book.pages;
     let read = row.insertCell();
     read.innerHTML = book.read;
+    let deleteCell = document.createElement('td');
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', () => {
+      myLibrary.splice(index, 1);
+      updateTable();
+    });
+    deleteCell.appendChild(deleteButton);
+    row.appendChild(deleteCell);
   });
   addStorage();
 }
